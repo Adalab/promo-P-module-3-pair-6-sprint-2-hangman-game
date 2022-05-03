@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 // api
 import getWordFromApi from '../services/api';
@@ -13,6 +14,9 @@ import Header from './Header';
 import SolutionLetters from './SolutionLetters';
 import ErrorLetters from './ErrorLetters';
 import Form from './Form';
+import Footer from './Footer';
+import Instruccions from './Instructions';
+import Options from './Options';
 
 function App() {
   const [word, setWord] = useState('');
@@ -54,6 +58,7 @@ function App() {
           <Form lastLetter={lastLetter} handleLastLetter={handleLastLetter} />
         </section>
         <Dummy getNumberOfErrors={getNumberOfErrors} />
+        <Footer />
       </main>
     </div>
   );
