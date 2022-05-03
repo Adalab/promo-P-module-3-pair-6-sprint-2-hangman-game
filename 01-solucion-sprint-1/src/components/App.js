@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 // api
-import getWordFromApi from "../services/api";
+import getWordFromApi from '../services/api';
 // styles
-import "../styles/App.scss";
+import '../styles/App.scss';
 
-import "../styles/Letters.scss";
-import "../styles/Form.scss";
-import "../styles/Header.scss";
-import Dummy from "./Dummy";
-import Header from "./Header";
-import SolutionLetters from "./SolutionLetters";
-import ErrorLetters from "./ErrorLetters";
+import '../styles/Letters.scss';
+import '../styles/Form.scss';
+import '../styles/Header.scss';
+import Dummy from './Dummy';
+import Header from './Header';
+import SolutionLetters from './SolutionLetters';
+import ErrorLetters from './ErrorLetters';
+import Form from './Form';
 
 function App() {
-  const [word, setWord] = useState("");
+  const [word, setWord] = useState('');
   const [userLetters, setUserLetters] = useState([]);
-  const [lastLetter, setLastLetter] = useState("");
+  const [lastLetter, setLastLetter] = useState('');
 
   useEffect(() => {
     getWordFromApi().then((word) => {
@@ -25,22 +26,6 @@ function App() {
   }, []);
 
   // events
-
-  const handleKeyDown = (ev) => {
-    // Sabrías decir para qué es esta línea
-    ev.target.setSelectionRange(0, 1);
-  };
-
-  const handleChange = (ev) => {
-    let re = /[a-zA-Z]/; //add regular pattern - lesson 3.3 exercise 2
-    if (re.test(ev.target.value)) {
-      handleLastLetter(ev.target.value);
-    }
-  };
-
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-  };
 
   const getNumberOfErrors = () => {
     const errorLetters = userLetters.filter(
@@ -66,23 +51,7 @@ function App() {
         <section>
           <SolutionLetters word={word} userLetters={userLetters} />
           <ErrorLetters word={word} userLetters={userLetters} />
-          <form className="form" onSubmit={handleSubmit}>
-            <label className="title" htmlFor="last-letter">
-              Escribe una letra:
-            </label>
-            <input
-              autoFocus
-              autoComplete="off"
-              className="form__input"
-              maxLength="1"
-              type="text"
-              name="last-letter"
-              id="last-letter"
-              value={lastLetter}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-            />
-          </form>
+          <Form lastLetter={lastLetter} handleLastLetter={handleLastLetter} />
         </section>
         <Dummy getNumberOfErrors={getNumberOfErrors} />
       </main>
