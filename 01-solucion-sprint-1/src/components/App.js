@@ -1,27 +1,26 @@
-import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 // api
-import getWordFromApi from '../services/api';
+import getWordFromApi from "../services/api";
 // styles
-import '../styles/App.scss';
+import "../styles/App.scss";
 
-import '../styles/Letters.scss';
-import '../styles/Form.scss';
-import '../styles/Header.scss';
-import Dummy from './Dummy';
-import Header from './Header';
-import SolutionLetters from './SolutionLetters';
-import ErrorLetters from './ErrorLetters';
-import Form from './Form';
-import Footer from './Footer';
-import Instruccions from './Instructions';
-import Options from './Options';
+//Components
+
+import Dummy from "./Dummy";
+import Header from "./Header";
+import SolutionLetters from "./SolutionLetters";
+import ErrorLetters from "./ErrorLetters";
+import Form from "./Form";
+import Footer from "./Footer";
+import Instruccions from "./Instructions";
+import Options from "./Options";
 
 function App() {
-  const [word, setWord] = useState('');
+  const [word, setWord] = useState("");
   const [userLetters, setUserLetters] = useState([]);
-  const [lastLetter, setLastLetter] = useState('');
+  const [lastLetter, setLastLetter] = useState("");
 
   useEffect(() => {
     getWordFromApi().then((word) => {
@@ -53,13 +52,27 @@ function App() {
       <Header />
       <main className="main">
         <section>
-          <SolutionLetters word={word} userLetters={userLetters} />
-          <ErrorLetters word={word} userLetters={userLetters} />
-          <Form lastLetter={lastLetter} handleLastLetter={handleLastLetter} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <SolutionLetters word={word} userLetters={userLetters} />
+                  <ErrorLetters word={word} userLetters={userLetters} />
+                  <Form
+                    lastLetter={lastLetter}
+                    handleLastLetter={handleLastLetter}
+                  />
+                </>
+              }
+            />
+            <Route path="/instructions" element={<Instruccions />} />
+            <Route path="/options" element={<Options />} />
+          </Routes>
         </section>
         <Dummy getNumberOfErrors={getNumberOfErrors} />
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }
